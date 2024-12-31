@@ -96,9 +96,11 @@
         private function gen_hash(){
             if (isset($this->_request['pass'])){
                 $s = new Signup("",$this->_request['pass'],"");
+                $hash = $s->hashPassword();
                 $data = [
-                    "hash" => $s->hashPassword(),
-                    "val" => $this->_request['pass']
+                    "hash" => $hash,
+                    "val" => $this->_request['pass'],
+                    "verify" => password_verify($this->_request['pass'],$hash)
                 ];
                 $data=$this->json($data);
                 $this->response($data,200);
