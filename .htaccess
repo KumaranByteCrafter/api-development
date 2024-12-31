@@ -1,14 +1,8 @@
-RewriteBase /
-RewriteEngine On
-
-RewriteRule ^/?api/([^/]+)?$ api/index.php?rquest=$1 [QSA,NC,L]
-
-## For general files, if not above, just remove .php
-
-# Redirect external .php requests to 404 Error (Pretending that I am not doing PHP)
-RewriteCond %{THE_REQUEST} ^(.+)\.php([#?][^\ ]*)?\ HTTP/
-#RewriteRule ^(.+)\.php$ "http://%{HTTP_HOST}/$1" [R=404,L]
-
-# Resolve .php file for extensionless php urls
-RewriteCond %{REQUEST_FILENAME}\.php -f
-RewriteRule ^([^/.]+)$ $1.php [L]
+# Turn on the rewrite engine
+RewriteEngine  on
+# If the request doesn't end in .php (Case insensitive) continue processing rules
+RewriteCond %{REQUEST_URI} !\.php$ [NC]
+# If the request doesn't end in a slash continue processing the rules
+RewriteCond %{REQUEST_URI} [^/]$
+# Rewrite the request with a .php extension. L means this is the 'Last' rule
+RewriteRule ^(.*)$ $1.php [L]

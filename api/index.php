@@ -107,6 +107,20 @@
             }
         }
 
+        private function verify_hash(){
+            if (isset($this->_request['pass']) and isset($this->_request['hash'])){
+                $hash = $this->_request['hash'];
+                $data = [
+                    "hash" => $hash,
+                    "info" => password_get_info($hash),
+                    "val" => $this->_request['pass'],
+                    "verify" => password_verify($this->_request['pass'],$hash)
+                ];
+                $data=$this->json($data);
+                $this->response($data,200);
+            }
+        }
+
 
 
 
