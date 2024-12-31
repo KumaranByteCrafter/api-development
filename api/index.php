@@ -2,6 +2,7 @@
     error_reporting(E_ALL ^ E_DEPRECATED);
     require_once("REST.api.php");
     require_once("lib/Database.class.php");
+    require_once("lib/Signup.class.php");
     class API extends REST {
 
         public $data = "";
@@ -90,6 +91,18 @@
         function generate_hash(){
             $bytes = random_bytes(16);
             return bin2hex($bytes);
+        }
+
+        private function gen_hash(){
+            if (isset($this->_request['pass'])){
+                $s = new Signup("",$this->_request['pass'],"");
+                $data = [
+                    "hash" => $s->hashPassword(),
+                    "val" => $this->_request['pass']
+                ];
+                $data=$this->json($data);
+                $this->response($data,200);
+            }
         }
 
 
