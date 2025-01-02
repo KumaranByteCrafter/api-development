@@ -36,7 +36,7 @@ class Signup{
         return password_hash($this->password,PASSWORD_BCRYPT,$options);
     }
     public function user_exists($username,$email){
-        $sql = $sql = "SELECT COUNT(*) as user_count FROM `auth` WHERE `username` = '$username' AND `email` = '$email';";
+        $sql = "SELECT COUNT(*) as user_count FROM `auth` WHERE `username` = '$username' AND `email` = '$email';";
         $check_email = mysqli_query($this->db,$sql);
         if ($check_email) {
             $row = mysqli_fetch_assoc($check_email);
